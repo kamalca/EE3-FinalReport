@@ -21,30 +21,68 @@
 \begin{document}
 \maketitle
 
-%%
+%1
 \section{Introduction and Background}
 
-%%
+%2
 \section{Testing Methodology}
-\subsection{Test Setup}
+%%2.1
+\subsection{Motors}
+%%%2.1.1
+\subsubsection{Test Setup}
+In order to be able control the motors in Energia, we first looked up the pin numbers on the MSP432 Pin Chart. From this chart we were able to find all the relevant pins to control the motors. \\ \\
+%%%Pin Chart
+\begin{tabu}{|c|c|c|}
+\hline
+\textbf{Pin Functionality} & \textbf{Pin Number for Left Motor} & \textbf{Pin Number for Right Motor} \\ \hline
+No Sleep (nSLP) & 31 & 11 \\
+Direction (DIR) & 29 & 30 \\
+Duty Cycle (PWM) & 40 & 39 \\
+\hline
+\end{tabu} \\ \\
+Some of these pins also needed to be set to the correct mode and values. In Energia, the modes are set with the \texttt{pinMode} function, and the pin value is set through the \texttt{digitalWrite} function. \\ \\
+%%%Pin Values
+\begin{tabu}{|c|c|c|}
+\hline
+\textbf{Pin Functionality} & \textbf{Pin Mode} & \textbf{Pin Value} \\ \hline
+No Sleep (nSLP) & OUTPUT & HIGH \\
+Direction (DIR) & OUTPUT & HIGH \\
+\hline
+\end{tabu} \\ \\
+%%%2.1.2
+\subsubsection{How the Tests were Conducted}
 
-\subsection{How the Tests were Conducted}
+%%%2.1.3
+\subsubsection{Data Analysis}
 
-\subsection{Data Analysis}
+%%%2.1.4
+\subsubsection{Test Data Interpretation}
 
-\subsection{Test Data Interpretation}
+%%2.2
+\subsection{Path Sensors}
+%%%2.2.1
+\subsubsection{Test Setup}
+
+%%%2.2.2
+\subsubsection{How the Tests were Conducted}
+
+%%%2.2.3
+\subsubsection{Data Analysis}
+
+%%%2.2.4
+\subsubsection{Test Data Interpretation}
 
 
-%%
+%3
 \section{Results and Discussion}
 
-%%
+%4
 \section{Conclusions and Future Work}
 
-%%
+%5
 \section{Illustration Credits}
 
-%%
+%6
 \section{References}
 
 
