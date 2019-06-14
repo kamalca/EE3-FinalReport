@@ -64,8 +64,8 @@ Knowing that the power to the motors ranges from 0-255, we wanted to get a feel 
 \textbf{Car Speed} & \textbf{Motor Power} \\ \hline
 Not Moving &  0 - 20 \\
 Slow       & 20 - 40 \\
-Medium     & 40 - 80 \\
-Fast       & 80 - 255 \\ \hline
+Medium     & 40 - 90 \\
+Fast       & 90 - 255 \\ \hline
 \end{tabu}
 \\ \\
 Next we tested the evenness / straightness of the motors. We wanted to ensure that the car drove as straight as possible at the base power we would use in our path following program. Knowing the length of the course and the time limit, we were able to estimate that for our car to go fast enough, the base power of the motors would have to be around 60 on each motor. This is the target power we used when testing straightness. We noticed that going from zero power immediately to the target power would cause the car to jerk very quickly. For this reason, we used a for loop that changed the power of the motor incrementally with a small delay. This allowed the car to accelerate slowly and evenly without jerking around. We found this gave the most accurate results when trying to determine what power on each motor was needed to get the car to go straight.
@@ -81,12 +81,15 @@ Next we tested the evenness / straightness of the motors. We wanted to ensure th
 
 %%%2.1.3
 \subsubsection{Data Analysis}
-From these tests, we generally deduced that the motors were functioning as expected. By observing the general speeds of the motors at different power levels, we determined that a base power of 60 or greater would be a good starting goal for our car to finish the track in time.
+From these tests we found that the motors must have power of at least 20 to move consistently. A base power above 90 was found to be quite fast. We suspect a speed above this would make it significantly more difficult to respond to input from the path sensors and make appropriate adjustments.
 \\ \\ 
-The tests on motor straightness showed that our motors went at the same speed when the powers were equal. Therefore we did not include a bias value in our final code.
+We also found that our car goes straight when the power of each motor is set to 60. This suggests that the car will go straight unless the power of the motors is different.
 
 %%%2.1.4
 \subsubsection{Test Data Interpretation}
+From these tests, we generally deduced that the motors were functioning as expected. By observing the general speeds of the motors at different power levels, we determined that a base power of 60 or greater would be a good starting goal for our car to finish the track in time. Also when using the shaft encoders to determine the speed of the vehicle, it is important to not go below 20 power on the motors, otherwise the feedback loop breaks because the motors are not turning. If the motors are not turning, the shaft encoders will not return information that can be used to calculated the speed.
+\\ \\ 
+The tests on motor straightness showed that our motors went at the same speed when the powers were equal. Therefore we did not include a bias value in our final code.
 
 %%2.2
 \subsection{Path Sensors}
