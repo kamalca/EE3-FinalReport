@@ -17,6 +17,9 @@
 \tabulinesep=1.2mm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{EE3.bib}
+
 \title{ECE 3 Final Report}
 \author{Kameron Carr \\ 504988167 \and Hien Ho \\ 505190709}
 \date{TA: Xin Li \\ Section 1A \\ June 15, 2019}
@@ -35,20 +38,21 @@ The path following system uses IR LEDs to shine light onto the ground, then the 
 \begin{figure}[h]
   \begin{center}
   \includegraphics[width=0.2\linewidth]{IR-Sensor.png}
-  \caption{Schematic for IR sensor \\ Source: Digi-Key Scheme-It online tool}
+  \caption{Schematic for IR sensor\cite{stu} \\ Credit: Digi-Key.com/SchemeIt}
   \label{fig:sensor}
   \end{center}
 \end{figure}
 \\ 
-As you can see in Figure \ref{fig:sensor}, the path sensor uses a resistor, capacitor, and phototransistor to detect IR light. When you put the sensor into output mode and set it to high, the out port becomes an in port and is set to $V_{cc}$. Therefore the voltage across the capacitor becomes 0V as long as you give it enough time. Upon changing the sensor pin to input mode, charge flows through the phototransistor depending on how much light is detected. This means that the voltage read on the pin will start at $V_{cc}$ and decay to zero over time. The rate of this decay depends on the amount of IR light entering the phototransistor.
+As you can see in Figure \ref{fig:sensor}, the path sensor uses a resistor, capacitor, and phototransistor to detect IR light. When you put the sensor into output mode and set it to high, the out port becomes an in port and is set to $V_{cc}$. Therefore the voltage across the capacitor becomes 0V as long as you give it enough time. Upon changing the sensor pin to input mode, charge flows through the phototransistor depending on how much light is detected. This means that the voltage read on the pin will start at $V_{cc}$ and decay to zero over time. The rate of this decay depends on the amount of IR light entering the phototransistor\cite{stu}.
 %Example Curves
 \begin{figure}[h]
   \begin{center}
   \includegraphics[width=0.5\linewidth]{curves.png}
-  \caption{Example decay curves \\ Source: Desmos.com}
+  \caption{Example decay curves\cite{stu} \\ Credit: Desmos.com}
   \label{fig:curves}
   \end{center}
 \end{figure}
+\\
 In Figure \ref{fig:curves} you can see what the curves may look like for different amounts of IR light going into the phototransistor. The red curve represents if more light is going into the phototransistor and the green curve represents less light. The difference in voltages after a certain amount of time is what allows the sensor to read in either a 1 or a 0 depending on how much IR light ground below it reflects. When you do a digital read, it returns a 1 when the voltage is over a certain value, and zero if the voltage is below that value. To get a good reading, you must take the reading when the high curve is above the threshold and the low curve is below the threshold.
 
 %2
@@ -71,7 +75,7 @@ Duty Cycle (PWM) & 40 & 39 \\
 \hline
 \end{tabu}
 \\ \\ \\
-Some of these pins also needed to be set to the correct mode and values. In Energia, the modes are set with the \texttt{pinMode} function, and the pin value is set through the \texttt{digitalWrite} function.
+Some of these pins also needed to be set to the correct mode and values. In Energia, the modes are set with the \texttt{pinMode} function, and the pin value is set through the \texttt{digitalWrite} function\cite{energia}.
 \\ \\
 %%%Pin Values
 \begin{tabu}{|c|c|c|}
@@ -203,15 +207,18 @@ In this chart the values for the two controllers is the multiple of the error th
 Since the time requirement for this project was 70 seconds, we determined that the observed behavior of the car was acceptable to meet the requirements. On the 40 second run, it was less reliable as the car went so quickly that it would often lag behind the curves in the path and then turn very hard to catch up to it. On race day we decided to use the 47.5 second run as it had a good balance of reliability and speed.
 %%3.2
 \subsection{Race Day Results}
+On race day, the car completed the track in 47.5 seconds. However, it did take three runs. One reason that the car may have run less reliably on race day than when we were testing is because the track was modified that morning. During testing, there were wrinkles in the track, while on the morning of race day, the entire track was flattened and retaped to the ground.
+\\ \\ 
+Our car also successfully completed the extra credit portion. It took data from the shaft encoders to get the amount of time per tenth of a rotation. It then took this information and converted it into a single car speed. It then compared the current speed to the target speed and adjusted by either speeding the car up or slowing it down.
 
 %4
 \section{Conclusions and Future Work}
+For the purposes of the assignment, our car fulfilled all of the requirements. We were able to follow the path and met the given time limit. However, for any real-world application, the reliability of the car would likely be an issue. On race day, our car did not succeed on the first run. The speed of the car in the end was not an issue because of the generous 70 second requirement.
+\\ \\ 
+Future work would focus on the reliability of the car at higher speeds. The impact of changing the look-back value was not discovered until later in the project. More time would allow for that value to be more finely tuned. Observations of some of the top performing cars looked that they used higher values for the linear controller. More experimentation may discover that a higher linear controller on our own car could boost performance. We would test this by raising the linear controller and see if it results in uncontrollable swerving. If swerving does occur, we could also trying simultaneously raising the derivative controller.
+\\ \\ 
+One advantage of our design over some of the other top designs observed is the smoothness of our car. The heavy reliance on the derivative controller resulted in a smooth, continuous motion of the car. This could be beneficial in any autonomous vehicle with passengers or fragile loads.
 
-%5
-\section{Illustration Credits}
-
-%6
-\section{References}
-
+\printbibliography
 
 \end{document}
