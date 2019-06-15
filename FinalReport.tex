@@ -49,7 +49,7 @@ As you can see in Figure \ref{fig:sensor}, the path sensor uses a resistor, capa
   \label{fig:curves}
   \end{center}
 \end{figure}
-In Figure \ref{fig:curves} you can see what the curves may look like for different amounts of IR light going into the phototransistor. The red curve represents if more light is going into the phototransistor and the green curve represents less light. The difference in voltages after a certain amount of time is what allows the sensor to read in either a 1 or a 0 depending on how much IR light ground below it reflects.
+In Figure \ref{fig:curves} you can see what the curves may look like for different amounts of IR light going into the phototransistor. The red curve represents if more light is going into the phototransistor and the green curve represents less light. The difference in voltages after a certain amount of time is what allows the sensor to read in either a 1 or a 0 depending on how much IR light ground below it reflects. When you do a digital read, it returns a 1 when the voltage is over a certain value, and zero if the voltage is below that value. To get a good reading, you must take the reading when the high curve is above the threshold and the low curve is below the threshold.
 
 %2
 \section{Testing Methodology}
@@ -80,7 +80,7 @@ Some of these pins also needed to be set to the correct mode and values. In Ener
 No Sleep (nSLP) & OUTPUT & HIGH \\
 Direction (DIR) & OUTPUT & HIGH \\
 \hline
-\end{tabu} \\ \\
+\end{tabu}
 %%%2.1.2
 \subsubsection{How the Tests were Conducted}
 Knowing that the power to the motors ranges from 0-255, we wanted to get a feel for how fast the car went at different power levels. These are only rough guidelines of what we found to be true for our car. Note that these speeds can fluctuate depending on your car and the charge of your batteries. If you want to control the speed of the car with more precision, you must use the motor shaft encoders to measure the rotations.
@@ -94,7 +94,7 @@ Slow       & 20 - 40 \\
 Medium     & 40 - 90 \\
 Fast       & 90 - 255 \\ \hline
 \end{tabu}
-\\ \\
+\\ \\ \\ 
 Next we tested the evenness / straightness of the motors. We wanted to ensure that the car drove as straight as possible at the base power we would use in our path following program. Knowing the length of the course and the time limit, we were able to estimate that for our car to go fast enough, the base power of the motors would have to be around 60 on each motor. This is the target power we used when testing straightness. We noticed that going from zero power immediately to the target power would cause the car to jerk very quickly. For this reason, we used a for loop that changed the power of the motor incrementally with a small delay. This allowed the car to accelerate slowly and evenly without jerking around. We found this gave the most accurate results when trying to determine what power on each motor was needed to get the car to go straight.
 \\ \\
 %%%Motor Straightness
@@ -123,9 +123,9 @@ The tests on motor straightness showed that our motors went at the same speed wh
 %%%2.2.1
 \subsubsection{Test Setup}
 As with the motors, testing the path sensors requires the car to have the batteries put in and the switch turned on.
-\\ 
+\\ \\ 
 In order to see the values from the sensors, we will need to be able to print to the serial monitor. The serial monitor must be initialized using \texttt{Serial.begin} and a data rate of 9600 bps.
-\\ 
+\\ \\ 
 To get readings from the sensors, we need to initialize the pins for the sensors as well as the infrared LEDs. We look at the pin chart to find the pin values we can use in Energia to refer to the LEDs and sensors.
 \\ \\ 
 %Sensor Pins
@@ -173,7 +173,34 @@ Originally we took these results and decided that 2ms would be a good delay to h
 \section{Results and Discussion}
 %%3.1
 \subsection{Test Results}
-
+When testing our car we mainly modified the scaling values of our linear and derivative controllers. We also modified the base speed and the number of cycles over which the derivative controller was calculating its difference, which we will call the look-back amount.
+\\ \\ 
+%Test behaviors
+\begin{tabu}{|c|c|c|}
+\hline
+\textbf{Value} & \textbf{Behavior When Too Low} & \textbf{Behavior When Too High} \\ \hline
+Linear Controller & Doesn't follow curve in path & Swerves out of control \\ 
+Derivative Controller & Swerves out of control & Jerks off path \\ 
+Base Speed & Doesn't make it in the required time & Doesn't follow curve in path \\ 
+Look-back & Swerves out of control or is very jerky & Responds too late to curve \\ 
+\hline
+\end{tabu}
+\\ \\ \\ 
+Using this understanding of the behavior, we were able to find values that worked and test them to find how fast the car finished the track.
+\\ \\ 
+%Test times
+\begin{tabu}{|c|c|c|c|c|}
+\hline
+Base Speed & Linear Controller & Derivative controller & Look-Back & Track Time \\ 
+\hline
+50 & 4 & 3 & 4 & 60 sec \\ 
+75 & 5 & 3.5 & 3 & 40 sec \\
+60 & 4 & 3 & 4 & 47.5 sec \\ \hline
+\end{tabu}
+\\ \\ \\ 
+In this chart the values for the two controllers is the multiple of the error that was added to the base speed. For the linear controller, the error is the current position minus the center location. In the derivative controller the error is the current position minus the position that was look-back value cycles in the past.
+\\ \\ 
+Since the time requirement for this project was 70 seconds, we determined that the observed behavior of the car was acceptable to meet the requirements. On the 40 second run, it was less reliable as the car went so quickly that it would often lag behind the curves in the path and then turn very hard to catch up to it. On race day we decided to use the 47.5 second run as it had a good balance of reliability and speed.
 %%3.2
 \subsection{Race Day Results}
 
