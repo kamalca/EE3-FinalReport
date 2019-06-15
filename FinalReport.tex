@@ -101,9 +101,10 @@ In order to see the values from the sensors, we will need to be able to print to
 \\ 
 To get readings from the sensors, we need to initialize the pins for the sensors as well as the infrared LEDs. We look at the pin chart to find the pin values we can use in Energia to refer to the LEDs and sensors.
 \\ \\ 
-\begin{tabu}{|l|l|}
+%Sensor Pins
+\begin{tabu}{|l|c|}
 \hline
-\textbf{Device} & \textbf{Pin Number} \\ \hline
+\makecell{\textbf{Device}} & \textbf{Pin Number} \\ \hline
 Sensor 0 (Right Most) & 65 \\
 Sensor 1              & 48 \\
 Sensor 2              & 64 \\
@@ -115,18 +116,31 @@ Sensor 7 (Left Most)  & 69 \\
 IR LEDs (Odd)         & 45 \\
 IR LEDs (Even)        & 61 \\ \hline
 \end{tabu}
-\\ \\ 
-All of the sensors are then set to \texttt{INPUT} using the \texttt{pinMode} function. All of the LEDs are set to \texttt{OUTPUT} using the \texttt{pinMode} function and to \texttt{HIGH} using the \texttt{digitalWrite} function.
+\\ \\ \\ 
+All of the LEDs are set to \texttt{OUTPUT} using the \texttt{pinMode} function and to \texttt{HIGH} using the \texttt{digitalWrite} function.
 
 %%%2.2.2
 \subsubsection{How the Tests were Conducted}
+To get readings from the sensors, we created a for loop that goes through the 8 sensors. For each sensor, you first have to set it to \texttt{OUTPUT} and \texttt{HIGH} then delay for 10 ms to charge the capacitor in the sensor. Then you set the sensor to \texttt{INPUT} and delay for a set amount of time before getting a reading using the \texttt{digitalRead} function. We tested a few values for this second delay. We did this by running the program and printing the sensor values to the serial monitor with the \texttt{Serial.print} function. We then moved the car side to side over a paper with a black line printed on it.
+\\ \\ 
+%Sensor Delays
+\begin{tabu}{|c|c|}
+\hline
+\textbf{Delay} & \textbf{Behavior} \\ \hline
+4 ms & All Zeros \\ 
+3 ms & Some Incorrect Zeros \\ 
+2 ms & Correct \\ 
+1 ms & Correct \\ 
+\hline
+\end{tabu}
 
 %%%2.2.3
 \subsubsection{Data Analysis}
+The car properly identified the difference between the white paper and the black printed paper when the delay after turning a sensor to input was 1 or 2 ms. A delay greater than 2ms resulted in unexpected / incorrect results. The errors were when the value should have been 1 but was instead 0. This is expected as if the delay is too large, then the capacitor will have too much time to discharge.
 
 %%%2.2.4
 \subsubsection{Test Data Interpretation}
-
+Originally we took these results and decided that 2ms would be a good delay to have for our path following program. However, later when we tried implementing the sensing of the horizontal black line for the purpose of turning around or stopping, we found that a delay of 1 ms resulted in more accurate results.
 
 %3
 \section{Results and Discussion}
