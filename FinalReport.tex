@@ -6,6 +6,9 @@
 \usepackage{makecell}
 \usepackage[siunitx, american]{circuitikz}
 
+\usepackage{graphicx}
+\usepackage{caption}
+
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
@@ -23,6 +26,30 @@
 
 %1
 \section{Introduction and Background}
+The goal of this project if to use knowledge from the course to program a small car to follow a path designated by a black line within a given amount of time. As an additional part of the project, you must read data from the shaft encoders to more precisely control the speed of the car.
+\\ 
+The car must determine its error from the the center of the path can correct itself. This is done by using two feedback loop controllers. One is a linear controller so it simply takes the difference between where it is and where it wants to be in order to make adjustments. For example, if I am to the right of the line, turn left. The second is the derivative controller. This one looks at how its position is changing to make adjustments. For example, if I am drifting left, turn right. These two controllers can give the car different suggestions on which way to turn. Taking the sum of the two controller values can give the car a good sense of what adjustments need to be made.
+\\ 
+The path following system uses IR LEDs to shine light onto the ground, then the IR sensors detect how much light reflects off the ground below it to determine if the ground is black or white.
+%IR Sensor Schematic
+\begin{figure}[h]
+  \begin{center}
+  \includegraphics[width=0.2\linewidth]{IR-Sensor.png}
+  \caption{Schematic for IR sensor \\ Source: Digi-Key Scheme-It online tool}
+  \label{fig:sensor}
+  \end{center}
+\end{figure}
+\\ 
+As you can see in Figure \ref{fig:sensor}, the path sensor uses a resistor, capacitor, and phototransistor to detect IR light. When you put the sensor into output mode and set it to high, the out port becomes an in port and is set to $V_{cc}$. Therefore the voltage across the capacitor becomes 0V as long as you give it enough time. Upon changing the sensor pin to input mode, charge flows through the phototransistor depending on how much light is detected. This means that the voltage read on the pin will start at $V_{cc}$ and decay to zero over time. The rate of this decay depends on the amount of IR light entering the phototransistor.
+%Example Curves
+\begin{figure}[h]
+  \begin{center}
+  \includegraphics[width=0.5\linewidth]{curves.png}
+  \caption{Example decay curves \\ Source: Desmos.com}
+  \label{fig:curves}
+  \end{center}
+\end{figure}
+In Figure \ref{fig:curves} you can see what the curves may look like for different amounts of IR light going into the phototransistor. The red curve represents if more light is going into the phototransistor and the green curve represents less light. The difference in voltages after a certain amount of time is what allows the sensor to read in either a 1 or a 0 depending on how much IR light ground below it reflects.
 
 %2
 \section{Testing Methodology}
