@@ -30,7 +30,7 @@
 \subsection{Motors}
 %%%2.1.1
 \subsubsection{Test Setup}
-To start, you may need to assemble your car. This process includes assembling the wheels, putting the motors into the clamps on the car, and putting the LaunchPad on the car. You may need a TA's help to solder the header connections. Also it is important to remove the 5V jumper on the LaunchPad. If you are using the same car as the one used in this lab, not removing the jumper \textbf{may cause permanent damage to the car when plugging into a computer}.
+To start, you may need to assemble your car. This process includes assembling the wheels, putting the motors into the clamps on the car, and putting the LaunchPad on the car. You may need a TA's help to solder the header connections. Also it is important to remove the 5V jumper on the LaunchPad. If you are using the same car as the one used in this lab, not removing the jumper \textbf{may cause permanent damage to the car when plugging into a computer}. Also make sure to put fresh batteries in your car and turn it on using the switch on the back end.
 \\
 In order to be able control the motors in Energia, we first looked up the pin numbers on the MSP432 Pin Chart. From this chart we were able to find all the relevant pins to control the motors.
 \\ \\
@@ -95,6 +95,28 @@ The tests on motor straightness showed that our motors went at the same speed wh
 \subsection{Path Sensors}
 %%%2.2.1
 \subsubsection{Test Setup}
+As with the motors, testing the path sensors requires the car to have the batteries put in and the switch turned on.
+\\ 
+In order to see the values from the sensors, we will need to be able to print to the serial monitor. The serial monitor must be initialized using \texttt{Serial.begin} and a data rate of 9600 bps.
+\\ 
+To get readings from the sensors, we need to initialize the pins for the sensors as well as the infrared LEDs. We look at the pin chart to find the pin values we can use in Energia to refer to the LEDs and sensors.
+\\ \\ 
+\begin{tabu}{|l|l|}
+\hline
+\textbf{Device} & \textbf{Pin Number} \\ \hline
+Sensor 0 (Right Most) & 65 \\
+Sensor 1              & 48 \\
+Sensor 2              & 64 \\
+Sensor 3              & 47 \\
+Sensor 4              & 52 \\
+Sensor 5              & 68 \\
+Sensor 6              & 53 \\
+Sensor 7 (Left Most)  & 69 \\
+IR LEDs (Odd)         & 45 \\
+IR LEDs (Even)        & 61 \\ \hline
+\end{tabu}
+\\ \\ 
+All of the sensors are then set to \texttt{INPUT} using the \texttt{pinMode} function. All of the LEDs are set to \texttt{OUTPUT} using the \texttt{pinMode} function and to \texttt{HIGH} using the \texttt{digitalWrite} function.
 
 %%%2.2.2
 \subsubsection{How the Tests were Conducted}
