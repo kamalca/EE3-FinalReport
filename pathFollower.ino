@@ -5,7 +5,7 @@
   const int right_nslp_pin = 11; //not sleep, digital
   const int right_dir_pin = 30; //direction, digital
   const int right_pwn_pin = 39; //duty cycle, analoge, 0-255
-   const int l_sleep = 31; //not sleep, digital
+  const int l_sleep = 31; //not sleep, digital
   const int l_dir = 29; //direction, digital
   const int l_pwr = 40; //duty cycle, analoge, 0-255
   const int r_sleep = 11; //not sleep, digital
